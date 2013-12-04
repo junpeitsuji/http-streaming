@@ -3,8 +3,8 @@
 <meta charset="utf-8">
 <title>HTTP Streaming パターン テスト</title>
 
-<!-- BODY -->
-<div id="body">
+<!-- CONTENTS -->
+<div id="content">
     <div id="description">
         <h1>HTTP Streaming パターン テスト</h1>
         <p>サーバー (push.php) からプッシュされるストリーミングデータ (JSON形式) を表示するサンプルアプリケーション</p>
@@ -13,51 +13,71 @@
 </div>
 
 <!-- Java Script -->
-<script type="text/javascript" src="http://code.jquery.com/jquery-1.8.3.js"></script>
+<script src="http://code.jquery.com/jquery-1.10.1.min.js"></script>
+<!--
+<script type="text/javascript" src="./js/jquery.hoverer.js"></script>
+-->
 <script type="text/javascript" src="./js/push.js"></script>
+
 <script type="text/javascript">
 $(function() {
-    
-    // オブジェクトを生成
-    var push = new Push('./push.php');
 
-    // 更新時の処理を登録
-    push.onUpdate = function(json){ 
-     	// データを更新したとき
-      	$('#message').html('<dt>id: </dt><dd>' + json.id + '</dd>'
-            +'<dt>message: </dt><dd>' + json.message + '</dd>'
-            +'<dt>createdAt: </dt><dd>' + json.createdAt + '</dd>')
-        .css('display', 'none')
-        .fadeIn('slow');
-    };
+  // content のサイズを取得しておく
+  var width  = parseInt($('#content').css('width'));
+  
+  // オブジェクトを生成
+  var push = new Push('./push.php');
 
-    // 終了時の処理を登録
-    push.onSuccess = function(){
-        console.log('finished');
-    };
+  // 更新時の処理を登録
+  push.onUpdate = function(json){ 
+    // データを更新したとき
 
-    // エラー時の処理を登録
-    push.onError = function(){
-        console.log('error occured');
+      $('#message').html(
+          '<div class="box" id="item-'+json.id+'"><dt>id: </dt><dd>' + json.id + '</dd>'
+          +'<dt>message: </dt><dd>' + json.message + '</dd>'
+          +'<dt>createdAt: </dt><dd>' + json.createdAt + '</dd>'
+      ).css('display', 'none').fadeIn('slow');
+      
+  };
 
-        // 再起動
-        location.reload();
-    };
+  // 終了時の処理を登録
+  push.onSuccess = function(){
+      console.log('finished');
+  };
 
-    // 受信開始
-    push.start();
+  // エラー時の処理を登録
+  push.onError = function(){
+      console.log('error occured');
+
+      // 再起動
+      location.reload();
+  };
+
+
+  // 受信開始
+  push.start();
 
 });
 </script>
+
+<!-- Style Sheet -->
 <style>
-#body {
+#content {
    width: 800px;
    margin: 0 auto;
 }
 
 dl.list {
-   border-bottom:1px solid #999;
+   /* border-bottom:1px solid #999; */
 }
+
+/*
+div.box {
+  padding: 10px;
+  border:1px solid #999; 
+  background-color: white;
+}
+*/
 
 dl.list dt {
    float:left;
