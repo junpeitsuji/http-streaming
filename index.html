@@ -36,6 +36,14 @@ $(function() {
         console.log('finished');
     };
 
+    // エラー時の処理を登録
+    push.onError = function(){
+        console.log('error occured');
+
+        // 再起動
+        location.reload();
+    };
+
     // 受信開始
     push.start();
 

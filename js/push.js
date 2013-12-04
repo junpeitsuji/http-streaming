@@ -38,6 +38,13 @@ var Push = (function($){
         console.log('success');
     }
 
+   /**
+     * 通信異常終了時に呼ばれるイベントハンドラ
+     */
+    Push.prototype.onError = function(){
+        console.log('error');
+    }
+
     /**
      * 通信を開始するメソッド
      */
