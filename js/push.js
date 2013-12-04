@@ -54,8 +54,7 @@ var Push = (function($){
                     var xhr = this;
                     //console.log('start');
 
-                    var prevId = -1;
-
+                    // 前回取得したデータの文字数
                     var textlength = 0;
 
                     // データが来るまで待つ
