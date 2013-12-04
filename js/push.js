@@ -54,31 +54,36 @@ var Push = (function($){
                     var xhr = this;
                     //console.log('start');
 
-                    prevId = -1;
+                    var prevId = -1;
+
+                    var textlength = 0;
 
                     // データが来るまで待つ
                     mytimer = setInterval(function() {
-                    
-                        var text  = xhr.responseText;
-                        var lines = text.split("\n");
 
-                        // 新しいデータがあれば更新
-                        lines.forEach(function(line){
+                        // 受信済みテキストを保存                    
+                        var text    = xhr.responseText;
 
-                            if( isJSON(line) ){
-                                // 正常な JSON データの時
-                                var json = JSON.parse(line);
+                        // 前回の取得からの差分を取得
+                        var newText = text.substring(textlength);
+                        
+                        // JSONデータを取得
+                        var lines   = newText.split("\n");
 
-                                if(json && json.id && json.id > prevId){
-                                    prevId = json.id;
+                        if( text.length > textlength ) {
+                            // 長さを更新
+                            textlength  = text.length;
 
-                                    if(push.onUpdate){
-                                        push.onUpdate(json);
-                                    }
-                                }                            
-                            }
+                            lines.forEach(function(line){
+                                if( isJSON(line) ){
+                                    // 正常な JSON データの時
+                                    var json = JSON.parse(line);
 
-                        });
+                                    // 更新
+                                    if(push.onUpdate){ push.onUpdate(json); }                            
+                                }
+                            });
+                        } 
 
                     }, 100);                
                 }
@@ -94,6 +99,18 @@ var Push = (function($){
                 setTimeout(function(){
                     clearInterval(mytimer);
                 }, 1000);
+            },
+            error: function(XMLHttpRequest, textStatus, errorThrown) {
+                //$("#XMLHttpRequest").html("XMLHttpRequest : " + XMLHttpRequest.status);
+                //$("#textStatus").html("textStatus : " + textStatus);
+                //$("#errorThrown").html("errorThrown : " + errorThrown.message);
+
+                if(push.onError){
+                    push.onError();
+                }         
+                
+                // タイマー停止
+                clearInterval(mytimer);
             }
         });
 
