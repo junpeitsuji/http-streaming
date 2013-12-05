@@ -1,14 +1,19 @@
 (function($){
 
     /**
-     *  プラグイン名の指定
+     *  jQuery プラグイン: オブジェクトが一定の速度で浮き上がるエフェクト
      */
     $.fn.hoverer=function(config){
+        
+        // デフォルト値
         var defaults = {
-          left: 0,
-          top: 800,
-          speed: 3
+          left: 0,   // 位置の初期値
+          top: 800,  // 位置の初期値
+          speed: 3,  // 1/60 秒 に移動するピクセル数
+          callback: function(pthis){ }  // オブジェクトが画面外に移動したときに呼ばれるコールバック
         }
+
+        // デフォルト値を反映させた引数オブジェクト
         var options = $.extend(defaults, config);
 
         // 一致した要素上で繰り返す
@@ -37,7 +42,7 @@
 
               }
               else{
-                pthis.remove();
+                if( options.callback ) { options.callback(pthis); }
               }
             }
 

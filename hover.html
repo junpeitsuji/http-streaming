@@ -43,8 +43,14 @@ $(function() {
       var left = Math.random() * width + rect.left;
       var top  = 800;
 
-      $('#item-'+json.id).hoverer({left: left, top: top, speed: 3});
-
+      $('#item-'+json.id).hoverer({
+        left: left, 
+        top: top, 
+        speed: 3, 
+        callback: function(pthis){
+          pthis.remove();
+        }
+      });
     }
       
   };
