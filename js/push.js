@@ -56,6 +56,7 @@ var Push = (function($){
         $.ajax({
             type: 'get',
             url: this.url,
+            cache: false,
             xhrFields: {
                 onloadstart: function() {
                     var xhr = this;
