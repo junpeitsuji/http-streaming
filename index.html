@@ -33,7 +33,7 @@ $(function() {
     // データを更新したとき
 
       $('#message').html(
-          '<div class="box" id="item-'+json.id+'"><dt>id: </dt><dd>' + json.id + '</dd>'
+          '<div class="box"><dt>id: </dt><dd>' + json.id + '</dd>'
           +'<dt>message: </dt><dd>' + json.message + '</dd>'
           +'<dt>createdAt: </dt><dd>' + json.createdAt + '</dd>'
       ).css('display', 'none').fadeIn('slow');
