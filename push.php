@@ -30,6 +30,7 @@ if( isAjax() ){
 
     $i = 0;
     while ( !connection_aborted() ) {
+        // クライアントからの接続が続いている間繰り返す
         
         // JSON に入れるデータ
         $id        = $i;
@@ -57,7 +58,7 @@ if( isAjax() ){
 
         $i++;
     }
-    //echo "0\r\n\r\n";    
+    echo "0\r\n\r\n";    
 }
 else {
     // Ajax アクセス以外はトップページへ誘導
