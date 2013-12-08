@@ -26,6 +26,7 @@ if( isAjax() ){
 
     header("Content-type: application/octet-stream");
     header("Transfer-encoding: chunked");
+    ob_flush();
     flush();
 
     $i = 0;
